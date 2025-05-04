@@ -11,7 +11,7 @@ Das Lab besteht aus zwei kleinen virtuellen Maschinen:
 - **Attacker-VM:** Führt simulierte Angriffe aus Payloads
 - **Defender-VM:** Beinhaltet Logging, Detection Rules und YARA-Scanner.
 
-> Virtualisierung = VMware.
+> Virtualisierung = Mit VMware
 
 ---
 
@@ -20,7 +20,7 @@ Das Lab besteht aus zwei kleinen virtuellen Maschinen:
 Hier versetzen wir uns in die Rolle eines Angreifers:
 
 - Nutzung bekannter Angriffstechniken (MITRE ATT&CK)
-- Erstellung und Ausführung von Payloads
+- Erstellung und Ausführung von Payloads mithilfe von SLIVER C2
 
 ---
 
@@ -29,40 +29,6 @@ Hier versetzen wir uns in die Rolle eines Angreifers:
 Auf der Defender-VM wird untersucht, ob und wie Angriffe erkannt werden:
 
 - Erstellung & Test von **YARA-Regeln**
-- Analyse mit Tools wie **Sysmon**
-- Einbindung von **LimaCharlie** für Thread Detection
+- Analyse der Prozesse und Logs mit LimaCharlie
+- Einbindung von LimaCharlie für Thread Detection
 
----
-
-## 🚫 Blocking Measures
-
-Nach dem Erkennen folgt das Blockieren:
-
-- Windows Defender Policies
-- Firewall-Regeln oder Network Segmentation
-- Test auf Umgehbarkeit
-
----
-
-## 🎯 Tuning False Positives
-
-Um die Qualität der Regeln zu verbessern:
-
-- Identifikation & Dokumentation von False Positives
-- Regelanpassung und Retesting
-- Ziel: Präzise, aber wirksame Detektion
-
----
-
-## 🔎 Beispiel: YARA-Trigger
-
-```yara
-rule Suspicious_Payload
-{
-    meta:
-        description = "Erkennt simplen Dropper"
-    strings:
-        $a = "powershell -enc"
-    condition:
-        $a
-}
